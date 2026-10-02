@@ -1,0 +1,113 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Loading -->
+  @if (loading) {
+    <div class="flex justify-center items-center min-h-[70vh]">
+      <div
+        class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"
+      ></div>
+    </div>
+  }
+
+  <!-- Article -->
+  @if (!loading && article) {
+    <main class="max-w-5xl mx-auto px-6 py-10">
+      <!-- Breadcrumb -->
+      <div class="mb-8">
+        <a
+          routerLink="/articles"
+          class="text-green-600 hover:text-green-800 font-medium"
+        >
+          ← Back to Articles
+        </a>
+      </div>
+
+      <!-- Article Card -->
+      <article
+        class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100"
+      >
+        <!-- Image -->
+        @if (article.imageUrl) {
+          <div class="w-full h-64 md:h-96 overflow-hidden">
+            <img
+              [src]="article.imageUrl"
+              [alt]="article.title"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        }
+
+        <!-- Content -->
+        <div class="px-6 py-8 md:px-12 md:py-10">
+          <!-- Category -->
+          <span
+            class="inline-block px-3 py-1 mb-5 bg-green-100 text-green-700 rounded-full text-sm font-semibold"
+          >
+            {{ article.category }}
+          </span>
+
+          <!-- Title -->
+          <h1
+            class="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-6"
+          >
+            {{ article.title }}
+          </h1>
+
+          <!-- Author / Date -->
+          <div
+            class="flex flex-wrap items-center gap-4 text-sm text-gray-500 border-b border-gray-200 pb-6 mb-8"
+          >
+            <span>
+              By
+              <strong class="text-gray-700">
+                {{ article.authorName }}
+              </strong>
+            </span>
+
+            <span>•</span>
+
+            <span>
+              {{ article.createdAt | date: "longDate" }}
+            </span>
+          </div>
+
+          <!-- Article Content -->
+          <div class="text-gray-700 text-lg leading-8 whitespace-pre-line">
+            {{ article.content }}
+          </div>
+
+          <!-- Bottom -->
+          <div class="mt-10 pt-6 border-t border-gray-200">
+            <a
+              routerLink="/articles"
+              class="inline-flex items-center px-5 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
+            >
+              ← Back to Articles
+            </a>
+          </div>
+        </div>
+      </article>
+    </main>
+  }
+
+  <!-- Not Found -->
+  @if (!loading && !article) {
+    <div
+      class="flex flex-col items-center justify-center min-h-[70vh] text-center px-6"
+    >
+      <div class="text-6xl mb-5">🌱</div>
+
+      <h1 class="text-3xl font-bold text-gray-800 mb-3">Article Not Found</h1>
+
+      <p class="text-gray-500 mb-6">
+        The article you're looking for doesn't exist or could not be loaded.
+      </p>
+
+      <a
+        routerLink="/articles"
+        class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+      >
+        Browse Articles
+      </a>
+    </div>
+  }
+</div>

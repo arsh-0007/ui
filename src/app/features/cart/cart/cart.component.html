@@ -1,0 +1,209 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Loading -->
+  @if (loading) {
+    <div class="flex justify-center items-center min-h-[70vh]">
+      <div
+        class="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"
+      ></div>
+    </div>
+  }
+
+  @if (!loading && cart) {
+    <main class="max-w-7xl mx-auto px-6 py-10">
+      <!-- Header -->
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8"
+      >
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900">
+            Shopping Cart
+          </h1>
+
+          <p class="text-gray-500 mt-2">
+            Review your gardening products before checkout.
+          </p>
+        </div>
+
+        @if (cart.items.length > 0) {
+          <button
+            type="button"
+            (click)="clearCart()"
+            [disabled]="clearingCart"
+            class="text-red-600 hover:text-red-800 font-medium disabled:opacity-50"
+          >
+            @if (clearingCart) {
+              Clearing...
+            } @else {
+              Clear Cart
+            }
+          </button>
+        }
+      </div>
+
+      <!-- Empty Cart -->
+      @if (cart.items.length === 0) {
+        <div
+          class="bg-white rounded-2xl shadow-sm border border-gray-100 text-center py-20 px-6"
+        >
+          <div class="text-7xl mb-6">🛒</div>
+
+          <h2 class="text-2xl font-bold text-gray-800 mb-3">
+            Your Cart is Empty
+          </h2>
+
+          <p class="text-gray-500 mb-8">
+            Add some gardening products to your cart.
+          </p>
+
+          <a
+            routerLink="/products"
+            class="inline-block px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-semibold"
+          >
+            Browse Products
+          </a>
+        </div>
+      }
+
+      <!-- Cart Items -->
+      @if (cart.items.length > 0) {
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Items -->
+          <section class="lg:col-span-2">
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+            >
+              @for (item of cart.items; track item.productId) {
+                <div class="p-6 border-b border-gray-100 last:border-b-0">
+                  <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+                    <!-- Product Icon -->
+                    <div
+                      class="w-20 h-20 rounded-xl bg-green-100 flex items-center justify-center text-4xl shrink-0"
+                    >
+                      🌱
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="flex-1">
+                      <h2 class="text-lg font-semibold text-gray-800">
+                        {{ item.productName }}
+                      </h2>
+
+                      <p class="text-gray-500 mt-1">
+                        ₹{{ item.price }} per item
+                      </p>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div>
+                      <p class="text-xs text-gray-500 mb-1">Quantity</p>
+
+                      <div class="flex items-center">
+                        <button
+                          type="button"
+                          (click)="decrease(item)"
+                          [disabled]="
+                            item.quantity <= 1 ||
+                            updatingProductId === item.productId
+                          "
+                          class="w-9 h-9 border rounded-l-lg disabled:opacity-40"
+                        >
+                          −
+                        </button>
+
+                        <div
+                          class="w-12 h-9 border-t border-b flex items-center justify-center font-semibold"
+                        >
+                          {{ item.quantity }}
+                        </div>
+
+                        <button
+                          type="button"
+                          (click)="increase(item)"
+                          [disabled]="updatingProductId === item.productId"
+                          class="w-9 h-9 border rounded-r-lg disabled:opacity-40"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Subtotal -->
+                    <div class="sm:text-right min-w-24">
+                      <p class="text-xs text-gray-500 mb-1">Subtotal</p>
+
+                      <p class="text-lg font-bold text-green-700">
+                        ₹{{ item.subtotal }}
+                      </p>
+                    </div>
+
+                    <!-- Remove -->
+                    <button
+                      type="button"
+                      (click)="removeItem(item)"
+                      [disabled]="updatingProductId === item.productId"
+                      class="text-red-500 hover:text-red-700 disabled:opacity-40"
+                      title="Remove item"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+
+          <!-- Summary -->
+          <aside>
+            <div
+              class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24"
+            >
+              <h2 class="text-xl font-bold text-gray-900 mb-6">
+                Order Summary
+              </h2>
+
+              <div class="flex justify-between text-gray-600 mb-3">
+                <span> Items </span>
+
+                <span>
+                  {{ cart.items.length }}
+                </span>
+              </div>
+
+              <div class="border-t border-gray-200 my-5"></div>
+
+              <div class="flex justify-between items-center mb-6">
+                <span class="text-lg font-semibold text-gray-800"> Total </span>
+
+                <span class="text-2xl font-bold text-green-700">
+                  ₹{{ cart.total }}
+                </span>
+              </div>
+
+              <!-- Checkout -->
+              <button
+                type="button"
+                (click)="checkout()"
+                [disabled]="isPaymentProcessing"
+                class="w-full rounded-xl bg-green-600 px-6 py-3 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                @if (isPaymentProcessing) {
+                  Processing Payment...
+                } @else {
+                  Pay Now
+                }
+              </button>
+
+              <!-- Continue Shopping -->
+              <a
+                routerLink="/products"
+                class="block text-center text-green-600 hover:text-green-800 font-medium mt-4"
+              >
+                ← Continue Shopping
+              </a>
+            </div>
+          </aside>
+        </div>
+      }
+    </main>
+  }
+</div>

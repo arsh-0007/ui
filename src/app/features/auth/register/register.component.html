@@ -1,0 +1,123 @@
+<div class="min-h-screen bg-green-50 flex items-center justify-center px-4">
+
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+
+      <div
+        class="mx-auto mb-4 flex h-14 w-14 items-center justify-center
+               rounded-full bg-green-100 text-3xl"
+      >
+        🌱
+      </div>
+
+      <h1 class="text-3xl font-bold text-green-700">
+        Create Account
+      </h1>
+
+      <p class="mt-2 text-gray-500">
+        Join the GardenCare community
+      </p>
+
+    </div>
+
+    <!-- Form -->
+    <form
+      (ngSubmit)="register()"
+      class="space-y-5"
+    >
+
+      <!-- Name -->
+      <div>
+
+        <label class="block mb-2 text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="Enter your name"
+          required
+          class="w-full rounded-lg border border-gray-300
+                 px-4 py-3 outline-none
+                 focus:border-green-500
+                 focus:ring-2 focus:ring-green-200"
+        />
+
+      </div>
+
+      <!-- Email -->
+      <div>
+
+        <label class="block mb-2 text-sm font-medium text-gray-700">
+          Email
+        </label>
+
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required
+          class="w-full rounded-lg border border-gray-300
+                 px-4 py-3 outline-none
+                 focus:border-green-500
+                 focus:ring-2 focus:ring-green-200"
+        />
+
+      </div>
+
+      <!-- Password -->
+      <div>
+
+        <label class="block mb-2 text-sm font-medium text-gray-700">
+          Password
+        </label>
+
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Create a password"
+          required
+          class="w-full rounded-lg border border-gray-300
+                 px-4 py-3 outline-none
+                 focus:border-green-500
+                 focus:ring-2 focus:ring-green-200"
+        />
+
+      </div>
+
+      <!-- Button -->
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-green-600 py-3
+               font-semibold text-white
+               transition hover:bg-green-700
+               focus:ring-4 focus:ring-green-200"
+      >
+        Create Account
+      </button>
+
+    </form>
+
+    <!-- Login -->
+    <p class="mt-6 text-center text-sm text-gray-600">
+
+      Already have an account?
+
+      <a
+        routerLink="/login"
+        class="font-semibold text-green-600 hover:text-green-700"
+      >
+        Login
+      </a>
+
+    </p>
+
+  </div>
+
+</div>

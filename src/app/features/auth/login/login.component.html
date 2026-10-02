@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-green-50 flex items-center justify-center px-4">
+
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+
+    <!-- Logo -->
+    <div class="text-center mb-8">
+
+      <div
+        class="mx-auto mb-4 flex h-14 w-14 items-center justify-center
+               rounded-full bg-green-100 text-3xl">
+        🌱
+      </div>
+
+      <h1 class="text-3xl font-bold text-green-700">
+        GardenCare
+      </h1>
+
+      <p class="mt-2 text-gray-500">
+        Grow better. Garden better.
+      </p>
+
+    </div>
+
+    <!-- Login Form -->
+    <form
+      (ngSubmit)="login()"
+      class="space-y-5"
+    >
+
+      <!-- Email -->
+      <div>
+
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Email
+        </label>
+
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          placeholder="Enter your email"
+          required
+          class="w-full rounded-lg border border-gray-300 px-4 py-3
+                 outline-none transition
+                 focus:border-green-500
+                 focus:ring-2 focus:ring-green-200"
+        />
+
+      </div>
+
+      <!-- Password -->
+      <div>
+
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Password
+        </label>
+
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          required
+          class="w-full rounded-lg border border-gray-300 px-4 py-3
+                 outline-none transition
+                 focus:border-green-500
+                 focus:ring-2 focus:ring-green-200"
+        />
+
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        class="w-full rounded-lg bg-green-600 py-3
+               font-semibold text-white
+               transition hover:bg-green-700
+               focus:ring-4 focus:ring-green-200"
+      >
+        Login
+      </button>
+
+    </form>
+
+    <!-- Register -->
+    <p class="mt-6 text-center text-sm text-gray-600">
+
+      Don't have an account?
+
+      <a
+        routerLink="/register"
+        class="font-semibold text-green-600 hover:text-green-700"
+      >
+        Register
+      </a>
+
+    </p>
+
+  </div>
+
+</div>

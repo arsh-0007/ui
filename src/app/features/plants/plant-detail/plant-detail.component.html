@@ -1,0 +1,303 @@
+
+
+<div class="min-h-screen bg-green-50">
+
+  <!-- Loading -->
+  @if (loading) {
+
+    <div class="flex min-h-[70vh] items-center justify-center">
+
+      <div
+        class="h-12 w-12 animate-spin
+               rounded-full border-4
+               border-green-200
+               border-t-green-600"
+      ></div>
+
+    </div>
+
+  }
+
+  <!-- Error -->
+  @else if (error) {
+
+    <div class="mx-auto max-w-4xl px-4 py-20 text-center">
+
+      <div class="text-6xl">
+        🌱
+      </div>
+
+      <h2 class="mt-5 text-2xl font-bold text-gray-900">
+        Plant not found
+      </h2>
+
+      <p class="mt-2 text-gray-500">
+        We couldn't find the plant you're looking for.
+      </p>
+
+      <a
+        routerLink="/plants"
+        class="mt-6 inline-block rounded-lg
+               bg-green-600 px-6 py-3
+               font-semibold text-white
+               hover:bg-green-700"
+      >
+        Back to Plants
+      </a>
+
+    </div>
+
+  }
+
+  <!-- Plant Details -->
+  @else if (plant) {
+
+    <main class="mx-auto max-w-7xl px-4 py-10
+                sm:px-6 lg:px-8">
+
+      <!-- Breadcrumb -->
+      <div class="mb-8 text-sm">
+
+        <a
+          routerLink="/plants"
+          class="text-green-600 hover:text-green-700"
+        >
+          Plants
+        </a>
+
+        <span class="mx-2 text-gray-400">
+          /
+        </span>
+
+        <span class="text-gray-500">
+          {{ plant.name }}
+        </span>
+
+      </div>
+
+
+      <!-- Main Card -->
+      <div
+        class="overflow-hidden rounded-3xl
+               bg-white shadow-lg"
+      >
+
+        <div class="grid lg:grid-cols-2">
+
+          <!-- Image -->
+          <div
+            class="min-h-[400px]
+                   bg-green-100"
+          >
+
+            @if (plant.imageUrl) {
+
+              <img
+                [src]="plant.imageUrl"
+                [alt]="plant.name"
+                class="h-full min-h-[400px]
+                       w-full object-cover"
+              />
+
+            } @else {
+
+              <div
+                class="flex h-full min-h-[400px]
+                       items-center justify-center
+                       text-9xl"
+              >
+                🌿
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- Information -->
+          <div class="p-8 lg:p-12">
+
+            <!-- Category -->
+            <span
+              class="inline-block rounded-full
+                     bg-green-100 px-4 py-1.5
+                     text-sm font-semibold
+                     text-green-700"
+            >
+              {{ plant.category }}
+            </span>
+
+
+            <!-- Name -->
+            <h1
+              class="mt-5 text-4xl font-bold
+                     tracking-tight text-gray-900
+                     lg:text-5xl"
+            >
+              {{ plant.name }}
+            </h1>
+
+
+            <!-- Description -->
+            <p
+              class="mt-6 text-lg leading-8
+                     text-gray-600"
+            >
+              {{ plant.description }}
+            </p>
+
+
+            <!-- Plant Care -->
+            <div class="mt-8">
+
+              <h2
+                class="text-xl font-bold
+                       text-gray-900"
+              >
+                Plant Care
+              </h2>
+
+
+              <div
+                class="mt-5 grid gap-4
+                       sm:grid-cols-2"
+              >
+
+                <!-- Sunlight -->
+                <div
+                  class="rounded-xl
+                         bg-yellow-50 p-4"
+                >
+
+                  <div class="text-2xl">
+                    ☀️
+                  </div>
+
+                  <p
+                    class="mt-2 text-sm
+                           text-gray-500"
+                  >
+                    Sunlight
+                  </p>
+
+                  <p
+                    class="font-semibold
+                           text-gray-900"
+                  >
+                    {{ plant.sunlight }}
+                  </p>
+
+                </div>
+
+
+                <!-- Water -->
+                <div
+                  class="rounded-xl
+                         bg-blue-50 p-4"
+                >
+
+                  <div class="text-2xl">
+                    💧
+                  </div>
+
+                  <p
+                    class="mt-2 text-sm
+                           text-gray-500"
+                  >
+                    Watering
+                  </p>
+
+                  <p
+                    class="font-semibold
+                           text-gray-900"
+                  >
+                    {{ plant.wateringFrequency }}
+                  </p>
+
+                </div>
+
+
+                <!-- Soil -->
+                <div
+                  class="rounded-xl
+                         bg-orange-50 p-4"
+                >
+
+                  <div class="text-2xl">
+                    🌱
+                  </div>
+
+                  <p
+                    class="mt-2 text-sm
+                           text-gray-500"
+                  >
+                    Soil Type
+                  </p>
+
+                  <p
+                    class="font-semibold
+                           text-gray-900"
+                  >
+                    {{ plant.soilType }}
+                  </p>
+
+                </div>
+
+
+                <!-- Season -->
+                <div
+                  class="rounded-xl
+                         bg-purple-50 p-4"
+                >
+
+                  <div class="text-2xl">
+                    🌤️
+                  </div>
+
+                  <p
+                    class="mt-2 text-sm
+                           text-gray-500"
+                  >
+                    Best Season
+                  </p>
+
+                  <p
+                    class="font-semibold
+                           text-gray-900"
+                  >
+                    {{ plant.season }}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Back -->
+            <a
+              routerLink="/plants"
+              class="mt-8 inline-flex
+                     items-center gap-2
+                     rounded-xl border
+                     border-green-600
+                     px-6 py-3
+                     font-semibold
+                     text-green-600
+                     hover:bg-green-50"
+            >
+              ← Back to Plants
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  }
+
+</div>
