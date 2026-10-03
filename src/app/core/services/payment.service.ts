@@ -1,14 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 
 export interface CreatePaymentOrderResponse {
   orderId: number;
+  keyId: string;
   razorpayOrderId: string;
   amount: number;
-  currency: string;
-  keyId: string;
 }
 
 export interface VerifyPaymentRequest {
@@ -24,16 +23,18 @@ export interface VerifyPaymentRequest {
 export class PaymentService {
   private http = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/api/payments`;
+  private readonly API_URL = `${environment.apiUrl}/api/payments`;
 
-  createPaymentOrder(orderId: number): Observable<CreatePaymentOrderResponse> {
+  createPaymentOrder(): Observable<CreatePaymentOrderResponse> {
     return this.http.post<CreatePaymentOrderResponse>(
-      `${this.apiUrl}/create-order/${orderId}`,
+      `${this.API_URL}/create-order`,
       {},
     );
   }
 
   verifyPayment(request: VerifyPaymentRequest): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/verify`, request);
+    return this.http.post(`${this.API_URL}/verify`, request, {
+      responseType: 'text',
+    });
   }
 }

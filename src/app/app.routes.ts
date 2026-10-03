@@ -80,11 +80,9 @@ export const routes: Routes = [
   },
 
   {
-    path: 'orders',
+    path: 'about',
     loadComponent: () =>
-      import('./features/orders/order-list/order-list.component').then(
-        (m) => m.OrderListComponent,
-      ),
+      import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
     path: 'admin',

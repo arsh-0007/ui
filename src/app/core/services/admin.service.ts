@@ -5,7 +5,7 @@ import { Product, ProductRequest } from '../models/product';
 import { Plant, PlantRequest } from '../models/plant';
 import { ArticleService } from './article.service';
 import { Article } from '../models/article';
-import { environment } from '../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({

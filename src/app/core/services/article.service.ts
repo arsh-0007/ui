@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Article, ArticleRequest } from '../models/article';
-import { environment } from '../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { PageResponse } from '../models/PageResponse';
 
 @Injectable({

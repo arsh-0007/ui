@@ -4,7 +4,11 @@ import { Cart, CartItem } from '../../../core/models/cart';
 import { NavbarComponent } from '../../../shared/navbar/navbar.component';
 import { Router, RouterLink } from '@angular/router';
 import { OrderService } from '../../../core/services/order.service';
-import { PaymentService } from '../../../core/services/payment.service';
+import {
+  CreatePaymentOrderResponse,
+  PaymentService,
+  VerifyPaymentRequest,
+} from '../../../core/services/payment.service';
 import { Order } from '../../../core/models/order';
 import { timeout, catchError, throwError } from 'rxjs';
 
@@ -149,90 +153,84 @@ export class CartComponent implements OnInit {
   //   });
   // }
 
-  checkout(): void {
-    if (!this.cart || this.cart.items.length === 0) {
-      return;
-    }
+  payNow(): void {
+    this.paymentService.createPaymentOrder().subscribe({
+      next: (response) => {
+        console.log('Payment order:', response);
 
-    this.checkingOut = true;
-
-    this.orderService.checkout().subscribe({
-      next: (order) => {
-        this.checkingOut = false;
-
-        this.openRazorpayCheckout(order);
+        this.openRazorpayCheckout(response);
       },
 
       error: (error) => {
-        console.error('Checkout failed', error);
-
-        this.checkingOut = false;
+        console.error('Unable to create payment order', error);
       },
     });
   }
 
-  openRazorpayCheckout(order: Order): void {
-    this.paymentService.createPaymentOrder(order.orderId).subscribe({
-      next: (paymentOrder) => {
-        const options = {
-          key: paymentOrder.keyId,
+  openRazorpayCheckout(response: CreatePaymentOrderResponse): void {
+    const options: any = {
+      key: response.keyId,
 
-          amount: paymentOrder.amount * 100,
+      amount: response.amount * 100,
 
-          currency: paymentOrder.currency,
+      currency: 'INR',
 
-          name: 'GardenCare',
+      name: 'GardenCare',
 
-          description: `GardenCare Order #${order.orderId}`,
+      description: 'GardenCare Order',
 
-          order_id: paymentOrder.razorpayOrderId,
+      order_id: response.razorpayOrderId,
 
-          handler: (response: any) => {
-            this.verifyPayment(order.orderId, response);
-          },
+      handler: (paymentResponse: any) => {
+        console.log('Razorpay payment response:', paymentResponse);
 
-          prefill: {
-            name: '',
-            email: '',
-          },
-
-          theme: {
-            color: '#16a34a',
-          },
-        };
-
-        const razorpay = new Razorpay(options);
-
-        razorpay.open();
+        this.verifyPayment(response.orderId, paymentResponse);
       },
 
-      error: (error) => {
-        console.error('Failed to create Razorpay order', error);
-
-        this.checkingOut = false;
+      prefill: {
+        name: 'user',
+        email: 'user@gmail.com',
+        contact: '1234567890',
       },
-    });
+
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    const razorpay = new (window as any).Razorpay(options);
+
+    razorpay.open();
   }
 
   verifyPayment(orderId: number, response: any): void {
-    this.paymentService
-      .verifyPayment({
-        orderId: orderId,
+    const request: VerifyPaymentRequest = {
+      orderId: orderId,
 
-        razorpayOrderId: response.razorpay_order_id,
+      razorpayOrderId: response.razorpay_order_id,
 
-        razorpayPaymentId: response.razorpay_payment_id,
+      razorpayPaymentId: response.razorpay_payment_id,
 
-        razorpaySignature: response.razorpay_signature,
-      })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/orders', orderId]);
-        },
+      razorpaySignature: response.razorpay_signature,
+    };
 
-        error: (error) => {
-          console.error('Payment verification failed', error);
-        },
-      });
+    this.paymentService.verifyPayment(request).subscribe({
+      next: (message) => {
+        console.log('Payment verified:', message);
+
+        alert('Payment successful!');
+
+        this.router.navigate(['/orders']);
+
+        // Reload cart/orders
+        this.loadCart();
+      },
+
+      error: (error) => {
+        console.error('Payment verification failed:', error);
+
+        alert('Payment verification failed.');
+      },
+    });
   }
 }

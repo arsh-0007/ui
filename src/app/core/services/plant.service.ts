@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Plant } from '../models/plant';
 import { Observable } from 'rxjs';
-import { environment } from '../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { PageResponse } from '../models/PageResponse';
 
 @Injectable({

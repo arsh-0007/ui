@@ -142,11 +142,14 @@ export class AdminDashboardComponent implements OnInit {
 
   selectedOrderStatus: OrderStatus | '' = '';
   orderStatuses: OrderStatus[] = [
+    'PAYMENT_PENDING',
     'PLACED',
-    'CONFIRMED',
     'SHIPPED',
     'DELIVERED',
     'CANCELLED',
+    'PAYMENT_FAILED',
+    'REFUND_PENDING',
+    'REFUNDED',
   ];
 
   orderSearchTerm = '';
@@ -727,10 +730,7 @@ export class AdminDashboardComponent implements OnInit {
   getAvailableStatuses(order: AdminOrder): OrderStatus[] {
     switch (order.status) {
       case 'PLACED':
-        return ['PLACED', 'CONFIRMED', 'CANCELLED'];
-
-      case 'CONFIRMED':
-        return ['CONFIRMED', 'SHIPPED', 'CANCELLED'];
+        return ['PLACED', 'CANCELLED'];
 
       case 'SHIPPED':
         return ['SHIPPED', 'DELIVERED'];
