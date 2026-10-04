@@ -28,6 +28,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy Angular build
 COPY --from=build /app/dist/gardencare-ui/browser /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 4200
 
 CMD ["nginx", "-g", "daemon off;"]
