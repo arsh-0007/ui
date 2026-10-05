@@ -156,7 +156,7 @@ export class CartComponent implements OnInit {
   payNow(): void {
     this.paymentService.createPaymentOrder().subscribe({
       next: (response) => {
-        console.log('Payment order:', response);
+     
 
         this.openRazorpayCheckout(response);
       },
