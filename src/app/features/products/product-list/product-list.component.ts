@@ -62,21 +62,23 @@ export class ProductListComponent implements OnInit {
   loadProducts(): void {
     this.loading = true;
 
-    this.productService.getProducts().subscribe({
-      next: (response) => {
-        this.products = response.content;
-        this.totalPages = response.totalPages;
-        this.totalElements = response.totalElements;
+    this.productService
+      .searchProducts(this.searchText, this.currentPage, this.pageSize)
+      .subscribe({
+        next: (response) => {
+          this.products = response.content;
+          this.totalPages = response.totalPages;
+          this.totalElements = response.totalElements;
 
-        this.loading = false;
-      },
+          this.loading = false;
+        },
 
-      error: (error) => {
-        console.error('Failed to load products', error);
+        error: (error) => {
+          console.error('Failed to load products', error);
 
-        this.loading = false;
-      },
-    });
+          this.loading = false;
+        },
+      });
   }
 
   search(): void {

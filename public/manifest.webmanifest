@@ -54,6 +54,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
+    },
+    {
+      "src": "icons/garden-care-icon.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ]
 }

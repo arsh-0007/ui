@@ -30,4 +30,14 @@ export class NavbarComponent {
   isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  mobileMenuOpen = false;
+
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+  }
 }

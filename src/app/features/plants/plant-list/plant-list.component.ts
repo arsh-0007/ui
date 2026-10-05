@@ -56,7 +56,7 @@ export class PlantListComponent implements OnInit {
   }
 
   search(): void {
-    if (!this.searchText.trim()) {
+    if (this.searchText.trim().length === 0) {
       this.loadPlants();
       return;
     }

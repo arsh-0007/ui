@@ -85,6 +85,11 @@ export const routes: Routes = [
       import('./features/about/about.component').then((m) => m.AboutComponent),
   },
   {
+    path: 'home',
+    loadComponent: () =>
+      import('./features/home/home.component').then((m) => m.HomeComponent),
+  },
+  {
     path: 'admin',
 
     canActivate: [authGuard, adminGuard],
@@ -97,7 +102,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'plants',
+    redirectTo: 'about',
     pathMatch: 'full',
   },
 

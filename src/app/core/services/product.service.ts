@@ -43,11 +43,11 @@ export class ProductService {
     size: number = 8,
   ): Observable<PageResponse<Product>> {
     const params = new HttpParams()
-      .set('name', name)
+      .set('search', name)
       .set('page', page)
       .set('size', size);
 
-    return this.http.get<PageResponse<Product>>(`${this.apiUrl}/search`, {
+    return this.http.get<PageResponse<Product>>(`${this.apiUrl}`, {
       params,
     });
   }
@@ -62,7 +62,7 @@ export class ProductService {
       .set('page', page)
       .set('size', size);
 
-    return this.http.get<PageResponse<Product>>(`${this.apiUrl}/category`, {
+    return this.http.get<PageResponse<Product>>(`${this.apiUrl}`, {
       params,
     });
   }

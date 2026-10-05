@@ -1,70 +1,81 @@
-<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+<nav class="sticky top-0 z-50 border-b border-gray-200 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Navbar -->
+    <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
-      <a routerLink="/plants" class="flex items-center gap-2">
+      <a
+        routerLink="/home"
+        class="flex items-center gap-2"
+        (click)="closeMobileMenu()"
+      >
         <span class="text-3xl">🌱</span>
 
-        <span class="text-2xl font-bold text-green-700"> GardenCare </span>
+        <span class="text-xl font-bold text-green-700 sm:text-2xl">
+          GardenCare
+        </span>
       </a>
 
-      <!-- Navigation -->
-      <div class="hidden md:flex items-center gap-6">
-        <!-- Plants -->
+      <!-- ================= DESKTOP NAV ================= -->
+      <div class="hidden items-center gap-5 md:flex lg:gap-7">
+        <a
+          routerLink="/home"
+          routerLinkActive="text-green-700 font-semibold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
+        >
+          Home
+        </a>
+
         <a
           routerLink="/plants"
           routerLinkActive="text-green-700 font-semibold"
-          class="text-gray-600 hover:text-green-600 transition"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
         >
           Plants
         </a>
 
-        <!-- Products -->
         <a
           routerLink="/products"
           routerLinkActive="text-green-700 font-semibold"
-          class="text-gray-600 hover:text-green-600 transition"
+          class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
         >
           Products
         </a>
 
-        <!-- Articles -->
         <a
           routerLink="/articles"
           routerLinkActive="text-green-700 font-semibold"
-          class="text-gray-600 hover:text-green-600 transition"
+          class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
         >
           Articles
         </a>
 
-        <!-- About -->
-
         <a
           routerLink="/about"
           routerLinkActive="text-green-700 font-semibold"
-          class="text-gray-600 hover:text-green-600 transition"
+          class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
         >
           About
         </a>
 
-        <!-- ⭐ ADMIN LINK GOES HERE -->
+        <!-- Admin -->
         @if (isAdmin()) {
           <a
             routerLink="/admin"
             routerLinkActive="text-green-700 font-semibold"
-            class="text-gray-600 hover:text-green-600 transition"
+            class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
           >
             Admin
           </a>
         }
 
-        <!-- Logged-in User -->
         @if (isLoggedIn()) {
           <!-- Orders -->
           <a
             routerLink="/orders"
             routerLinkActive="text-green-700 font-semibold"
-            class="text-gray-600 hover:text-green-600 transition"
+            class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
           >
             My Orders
           </a>
@@ -72,7 +83,8 @@
           <!-- Cart -->
           <a
             routerLink="/cart"
-            class="text-gray-600 hover:text-green-600 transition"
+            routerLinkActive="text-green-700 font-semibold"
+            class="text-sm text-gray-600 transition hover:text-green-600 lg:text-base"
           >
             🛒 Cart
           </a>
@@ -80,29 +92,188 @@
           <!-- Logout -->
           <button
             (click)="logout()"
-            class="rounded-lg bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-600 transition"
+            class="rounded-lg bg-red-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-red-600 lg:px-4"
           >
             Logout
           </button>
-        }
-
-        <!-- Logged-out User -->
-        @else {
+        } @else {
+          <!-- Login -->
           <a
             routerLink="/login"
-            class="rounded-lg border border-green-600 px-4 py-2 text-green-600 hover:bg-green-50"
+            class="rounded-lg border border-green-600 px-3 py-2 text-sm text-green-600 transition hover:bg-green-50 lg:px-4"
           >
             Login
           </a>
 
+          <!-- Register -->
           <a
             routerLink="/register"
-            class="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+            class="rounded-lg bg-green-600 px-3 py-2 text-sm text-white transition hover:bg-green-700 lg:px-4"
           >
             Register
           </a>
         }
       </div>
+
+      <!-- ================= MOBILE MENU BUTTON ================= -->
+      <button
+        type="button"
+        (click)="toggleMobileMenu()"
+        class="inline-flex items-center justify-center rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-green-600 focus:outline-none md:hidden"
+        aria-label="Toggle navigation"
+      >
+        @if (!mobileMenuOpen) {
+          <!-- Hamburger -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        } @else {
+          <!-- X -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-7 w-7"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        }
+      </button>
     </div>
+
+    <!-- ================= MOBILE / TABLET MENU ================= -->
+    @if (mobileMenuOpen) {
+      <div class="border-t border-gray-100 py-4 md:hidden">
+        <div class="flex flex-col space-y-1">
+          <!-- Home -->
+          <a
+            routerLink="/home"
+            routerLinkActive="bg-green-50 text-green-700 font-semibold"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+          >
+            🌱 Home
+          </a>
+          <!-- Plants -->
+          <a
+            routerLink="/plants"
+            routerLinkActive="bg-green-50 text-green-700 font-semibold"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+          >
+            🌱 Plants
+          </a>
+
+          <!-- Products -->
+          <a
+            routerLink="/products"
+            routerLinkActive="bg-green-50 text-green-700 font-semibold"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+          >
+            🪴 Products
+          </a>
+
+          <!-- Articles -->
+          <a
+            routerLink="/articles"
+            routerLinkActive="bg-green-50 text-green-700 font-semibold"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+          >
+            📚 Articles
+          </a>
+
+          <!-- About -->
+          <a
+            routerLink="/about"
+            routerLinkActive="bg-green-50 text-green-700 font-semibold"
+            (click)="closeMobileMenu()"
+            class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+          >
+            ℹ️ About
+          </a>
+
+          <!-- Admin -->
+          @if (isAdmin()) {
+            <a
+              routerLink="/admin"
+              routerLinkActive="bg-green-50 text-green-700 font-semibold"
+              (click)="closeMobileMenu()"
+              class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+            >
+              🛠️ Admin
+            </a>
+          }
+
+          @if (isLoggedIn()) {
+            <!-- Orders -->
+            <a
+              routerLink="/orders"
+              routerLinkActive="bg-green-50 text-green-700 font-semibold"
+              (click)="closeMobileMenu()"
+              class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+            >
+              📦 My Orders
+            </a>
+
+            <!-- Cart -->
+            <a
+              routerLink="/cart"
+              routerLinkActive="bg-green-50 text-green-700 font-semibold"
+              (click)="closeMobileMenu()"
+              class="rounded-lg px-4 py-3 text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+            >
+              🛒 Cart
+            </a>
+
+            <!-- Logout -->
+            <button
+              (click)="logout(); closeMobileMenu()"
+              class="mt-2 w-full rounded-lg bg-red-500 px-4 py-3 text-left font-medium text-white transition hover:bg-red-600"
+            >
+              Logout
+            </button>
+          } @else {
+            <!-- Login -->
+            <a
+              routerLink="/login"
+              (click)="closeMobileMenu()"
+              class="mt-2 rounded-lg border border-green-600 px-4 py-3 text-center font-medium text-green-600 transition hover:bg-green-50"
+            >
+              Login
+            </a>
+
+            <!-- Register -->
+            <a
+              routerLink="/register"
+              (click)="closeMobileMenu()"
+              class="rounded-lg bg-green-600 px-4 py-3 text-center font-medium text-white transition hover:bg-green-700"
+            >
+              Register
+            </a>
+          }
+        </div>
+      </div>
+    }
   </div>
 </nav>
