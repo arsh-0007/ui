@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://gardencare-backend.onrender.com',
+  apiUrl: 'https://gardenbackend-j2rl.onrender.com/',
 };
